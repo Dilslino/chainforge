@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import { WagmiProvider, http } from "wagmi";
+import { WagmiProvider, http, fallback } from "wagmi";
 import { baseSepolia } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RainbowKitProvider, getDefaultConfig } from "@rainbow-me/rainbowkit";
@@ -12,7 +12,11 @@ const config = getDefaultConfig({
   projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "demo",
   chains: [baseSepolia],
   transports: {
-    [baseSepolia.id]: http("https://base-sepolia-rpc.publicnode.com"),
+    [baseSepolia.id]: fallback([
+      http("https://base-sepolia.blockpi.network/v1/rpc/public"),
+      http("https://base-sepolia-rpc.publicnode.com"),
+      http("https://sepolia.base.org"),
+    ]),
   },
   ssr: true,
 });
