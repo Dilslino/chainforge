@@ -38,7 +38,7 @@ function createOpenRouterProvider(): AIProvider {
   return new OpenRouterAIProvider({
     apiKey,
     // Default to free model if not specified
-    model: process.env.NEXT_PUBLIC_OPENROUTER_MODEL || "openai/gpt-4o-mini",
+    model: process.env.NEXT_PUBLIC_OPENROUTER_MODEL || "arcee-ai/trinity-large-preview:free",
     siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
     siteName: "ChainForge",
   });
