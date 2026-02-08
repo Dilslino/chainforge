@@ -20,10 +20,8 @@ export function CreateTaskForm() {
   const [description, setDescription] = useState("");
   const [budget, setBudget] = useState("");
   const [formError, setFormError] = useState("");
-  const [_analysis, setAnalysis] = useState<TaskAnalysis | null>(null);
 
   const handleAnalysisChange = useCallback((newAnalysis: TaskAnalysis | null) => {
-    setAnalysis(newAnalysis);
     // Auto-fill suggested budget if user hasn't entered one
     if (newAnalysis && !budget) {
       setBudget(newAnalysis.suggestedBudgetETH.toString());

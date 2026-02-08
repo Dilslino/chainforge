@@ -27,10 +27,8 @@ export class NvidiaAIProvider implements AIProvider {
   // TODO: Implement NVIDIA NIM API call for task analysis
   // Use meta/llama-3.1-70b-instruct or similar model
   // Prompt should extract: complexity, skills, time estimates, budget
-  async analyzeTask(
-    _title: string,
-    _description: string
-  ): Promise<TaskAnalysis> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async analyzeTask(title: string, description: string): Promise<TaskAnalysis> {
     throw new Error(
       "NVIDIA AI provider not configured. Set NEXT_PUBLIC_NVIDIA_API_KEY and NEXT_PUBLIC_AI_MODE=nvidia"
     );
@@ -38,10 +36,8 @@ export class NvidiaAIProvider implements AIProvider {
 
   // TODO: Implement agent matching with embeddings
   // Use NVIDIA embedding models for semantic skill matching
-  async matchAgents(
-    _taskAnalysis: TaskAnalysis,
-    _availableAgents: Agent[]
-  ): Promise<AgentMatch[]> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async matchAgents(taskAnalysis: TaskAnalysis, availableAgents: Agent[]): Promise<AgentMatch[]> {
     throw new Error(
       "NVIDIA AI provider not configured. Set NEXT_PUBLIC_NVIDIA_API_KEY and NEXT_PUBLIC_AI_MODE=nvidia"
     );
@@ -49,11 +45,8 @@ export class NvidiaAIProvider implements AIProvider {
 
   // TODO: Implement work verification with LLM
   // Use chain-of-thought prompting to verify deliverables
-  async verifyWork(
-    _taskDescription: string,
-    _submittedProof: string,
-    _requirements?: string[]
-  ): Promise<VerificationResult> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async verifyWork(taskDescription: string, submittedProof: string, requirements?: string[]): Promise<VerificationResult> {
     throw new Error(
       "NVIDIA AI provider not configured. Set NEXT_PUBLIC_NVIDIA_API_KEY and NEXT_PUBLIC_AI_MODE=nvidia"
     );
