@@ -13,7 +13,7 @@ const config = getDefaultConfig({
   chains: [baseSepolia],
   transports: {
     [baseSepolia.id]: fallback([
-      http("https://base-sepolia.blockpi.network/v1/rpc/public"),
+      http("https://base-sepolia.drpc.org"),
       http("https://base-sepolia-rpc.publicnode.com"),
       http("https://sepolia.base.org"),
     ]),
