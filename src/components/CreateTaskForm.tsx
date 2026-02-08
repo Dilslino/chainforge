@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAccount } from "wagmi";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useCreateTask } from "@/hooks/useTaskContract";
+import { TaskAnalysisComponent } from "@/components/TaskAnalysis";
+import { TaskAnalysis } from "@/lib/ai/types";
 
 export function CreateTaskForm() {
   const router = useRouter();
@@ -18,6 +20,15 @@ export function CreateTaskForm() {
   const [description, setDescription] = useState("");
   const [budget, setBudget] = useState("");
   const [formError, setFormError] = useState("");
+  const [analysis, setAnalysis] = useState<TaskAnalysis | null>(null);
+
+  const handleAnalysisChange = useCallback((newAnalysis: TaskAnalysis | null) => {
+    setAnalysis(newAnalysis);
+    // Auto-fill suggested budget if user hasn't entered one
+    if (newAnalysis && !budget) {
+      setBudget(newAnalysis.suggestedBudgetETH.toString());
+    }
+  }, [budget]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -105,6 +116,13 @@ export function CreateTaskForm() {
               {description.length}/1000 characters
             </p>
           </div>
+
+          {/* AI Analysis */}
+          <TaskAnalysisComponent
+            title={title}
+            description={description}
+            onAnalysisChange={handleAnalysisChange}
+          />
 
           <div className="space-y-2">
             <label htmlFor="budget" className="text-sm font-medium">
