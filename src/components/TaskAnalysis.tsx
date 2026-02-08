@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTaskAnalysis } from "@/hooks/useAI";
@@ -18,35 +18,33 @@ export function TaskAnalysisComponent({
   onAnalysisChange,
 }: TaskAnalysisProps) {
   const { analyze, analysis, isLoading, error } = useTaskAnalysis();
-  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Debounced analysis - 1 second delay
   const debouncedAnalyze = useCallback(
     (t: string, d: string) => {
-      if (debounceTimer) {
-        clearTimeout(debounceTimer);
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
       }
 
-      const timer = setTimeout(() => {
+      debounceTimerRef.current = setTimeout(() => {
         if (t.length > 3 || d.length > 20) {
           analyze(t, d);
         }
       }, 1000);
-
-      setDebounceTimer(timer);
     },
-    [analyze, debounceTimer]
+    [analyze]
   );
 
   useEffect(() => {
     debouncedAnalyze(title, description);
 
     return () => {
-      if (debounceTimer) {
-        clearTimeout(debounceTimer);
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
       }
     };
-  }, [title, description]);
+  }, [title, description, debouncedAnalyze]);
 
   useEffect(() => {
     onAnalysisChange?.(analysis);

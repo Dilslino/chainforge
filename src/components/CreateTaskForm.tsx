@@ -20,7 +20,7 @@ export function CreateTaskForm() {
   const [description, setDescription] = useState("");
   const [budget, setBudget] = useState("");
   const [formError, setFormError] = useState("");
-  const [analysis, setAnalysis] = useState<TaskAnalysis | null>(null);
+  const [_analysis, setAnalysis] = useState<TaskAnalysis | null>(null);
 
   const handleAnalysisChange = useCallback((newAnalysis: TaskAnalysis | null) => {
     setAnalysis(newAnalysis);
